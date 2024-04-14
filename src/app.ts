@@ -129,10 +129,29 @@ accounting.describe();
 
 
 
-// class Ucl {
-//   constructor(id: string, name: string[], leage: string[]) {}
+class Ucl {
 
-//   addCheam(chaem: string) {
+  static createCheem(id: number, name: string) {
+    const cheem = {id, name}
+    return cheem;
+  }
 
-//   }
-// }
+  constructor(private id: number, private name: string[], private leage: string[]) {}
+
+  // abstract deleteCheem(id: number, cheem: string): void;
+
+  addChem(index: number, chem: string) {
+    if(this.name && this.leage) {
+      return;
+    } else {
+      this.name.push(chem);
+      this.leage.push(chem);
+      return this.id === index? this.id : null;
+    }
+  }
+}
+
+const ars = new Ucl(2, ['アーセナル'], ['アーセナル']);
+ars.addChem(2, 'シティ');
+
+const city = Ucl.createCheem(1, 'manCity');
