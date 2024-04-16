@@ -1,3 +1,4 @@
+
 abstract class Department {
   static fiscalYear = 2020;
   // private readonly id: string;

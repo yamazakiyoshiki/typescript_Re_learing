@@ -1,46 +1,98 @@
-// type AddFn = (a: number, b: number) => number;
-interface AddFn {
-  (a: number, b: number): number;
+// export{}
+
+// const names: Array<string> = [];
+// names[0].split('');
+
+// const promise: Promise<number> = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve(10)
+//   }, 2000);
+// })
+
+// promise.then(data => {
+//   data.to('');
+// })
+
+function merge<T extends object, U extends object>(objA: T, objB: U) {
+  return Object.assign(objA, objB);
 }
 
-let ad: AddFn;
+const mergedObj = merge({name: 'Max', hobbies: ['Sports']},
+{age: 20});
+const mergedObj2 = merge({name: 'Max'}, {age: 30});
+console.log(mergedObj.age);
 
-ad = (n1: number, n2: number) => {
-  return n1 + n2;
+interface Lengthy {
+  length: number;
 }
 
-interface Named {
-  readonly name?: string;
-  outputName?: string;
-};
+function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
+  let descriptionText = '値がありません。';
+  if(element.length > 0) {
+    descriptionText = '値は' + element.length + '個です。';
+  }
+  return [element, descriptionText]
+}
 
-interface Greetable extends Named{
-  greet(phrase: string): void;
+console.log(countAndDescribe(['Sports', 'Cooking']));
+
+function extractAndConvert<T extends object, U extends keyof T>(obj: T, key: U) {
+  return 'Value' + obj[key];
+}
+
+const result4 = extractAndConvert({name: 'Max'}, "name");
+console.log(result4);
+
+class DataStorage<T extends string | number | boolean> {
+  private data: T[] = [];
+
+  addItem(item: T) {
+    this.data.push(item)
   }
 
-  class Person implements Greetable {
-    name?: string;
-    age = 30;
-
-    constructor(n?: string) {
-      if(n){
-        this.name = n;
-      }
+  removeItem(item: T) {
+    if(this.data.indexOf(item) === -1) {
+      return;
     }
-
-    greet(phrase: string): void {
-      if(this.name) {
-        console.log(phrase + ' ' + this.name);
-      } else {
-        console.log('Hi!');
-      }
-    }
+    this.data.splice(this.data.indexOf(item), 1);// -1
   }
 
-let user1: Greetable;
+  getItems() {
+    return [...this.data];
+  }
+}
 
-user1 = new Person();
+const textStorage = new DataStorage<string>();
+textStorage.addItem("Data1");
+textStorage.addItem("Data2");
+textStorage.removeItem("Data1");
+console.log(textStorage.getItems());
 
-user1.greet('Hello I am');
+const numberStorage = new DataStorage<number>();
 
-console.log(user1);
+// const objStorage = new DataStorage<object>();
+// const obj4 = {name: 'Max'};
+// objStorage.addItem(obj4);
+// objStorage.addItem({name: 'Manu'});
+// //...
+// objStorage.removeItem(obj4);
+// console.log(objStorage.getItems());
+
+interface CourseGoal {
+  title: string;
+  description: string;
+  completeUntil: Date;
+}
+
+function createCourseGoal(
+  title: string,
+  description: string,
+  date: Date): CourseGoal {
+  let courseGoal: Partial<CourseGoal> = {};
+  courseGoal.title = title;
+  courseGoal.description = description;
+  courseGoal.completeUntil = date;
+  return courseGoal as CourseGoal;
+}
+
+const names: Readonly<string[]> = ['Max', 'Anna'];

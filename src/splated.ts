@@ -1,3 +1,4 @@
+
 // const adds = (a: number = 3, b: number = 1) => a + b;
 
 // const printOutput: (output: string | number) => void = output => {

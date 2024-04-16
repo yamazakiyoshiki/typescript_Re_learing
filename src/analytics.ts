@@ -1,3 +1,4 @@
+
 let logged;
 
 function sendAnalytics(data: string) {
